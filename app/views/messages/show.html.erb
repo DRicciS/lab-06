@@ -1,0 +1,10 @@
+<h1>Message Details</h1>
+
+<p><strong>ID:</strong> <%= @message.id %></p>
+<p><strong>Chat ID:</strong> <%= @message.chat_id %></p>
+<p><strong>User ID (Author):</strong> <%= @message.user_id %></p>
+<p><strong>Body:</strong> <%= @message.body %></p>
+<p><strong>Created At:</strong> <%= @message.created_at %></p>
+<p><strong>Updated At:</strong> <%= @message.updated_at %></p>
+
+<%= link_to '← Back to Messages', messages_path, class: "btn btn-secondary mt-3" %>

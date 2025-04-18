@@ -1,0 +1,9 @@
+<h1>Chat Details</h1>
+
+<p><strong>ID:</strong> <%= @chat.id %></p>
+<p><strong>Sender ID:</strong> <%= @chat.sender_id %></p>
+<p><strong>Receiver ID:</strong> <%= @chat.receiver_id %></p>
+<p><strong>Created At:</strong> <%= @chat.created_at %></p>
+<p><strong>Updated At:</strong> <%= @chat.updated_at %></p>
+
+<%= link_to '← Back to Chats', chats_path, class: "btn btn-secondary mt-3" %>
