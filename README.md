@@ -1,46 +1,50 @@
-# lab-05
+# lab-06  
 
-## Create your first ruby and rails models
+**Create basic views for your models**
 
-In this evaluation, you will be asked to create the first models of your web application `Whats New` using Ruby on Rails.
+In this evaluation, you will add basic views to your Whats New application using Ruby on Rails.
+
+---
 
 ## Instructions
 
-### 1. Create models and database tables
+Work on the same repository as the last laboratory session so you can have the code you already generated for the models.
 
-You will have to create at least 3 independent models (and tables). Later on the course we will learn to create associations between models, for the moment all models will be independent from each other.
+### 1. Create views for your models
 
-#### 1.1 Creation of the `User` model and database table
+Using the models created in **lab-05**, you will now implement the basic **index** and **show** views for each one.
 
-Create the `User` models and respective database table with at least the following attributes:
+You must create views for the following models:
 
-- `email` (of type `string`)
-- `first_name` (type `string`)
-- `last_name` (type `string`)
-- `created_at`` (type`datetime`)
-- `updated_at` (type `datetime`)
+- `User`
+- `Chat`
+- `Message`
 
-#### 1.2 Creation of the `Chat` model and database table
+---
 
-Create the `Chat` model and respective database table with the following attributes:
+### 1.1 Index views
 
-- `sender_id` (of type `integer`)
-- `receiver_id` (type `integer`)
-- `created_at` (type `datetime`)
-- `updated_at` (type `datetime`)
+For each model, create an `index` view that:
 
-#### 1.3 Creation of the `Message` model and database table
+- Lists all the records of the model
+- Shows the values of all attributes in a table format
+- Includes a link to see each individual record (`show` view)
 
-Create the `Message` model and respective database table with the following attributes:
+---
 
-- `chat_id` (type `integer`)
-- `user_id` (type `integer`)
-- `body` (type `text`)
-- `created_at` (type `datetime`)
-- `updated_at` (type `datetime`)
+### 1.2 Show views
 
-All attributes must be `NOT NULL` at the database level.
+For each model, create a `show` view that:
 
-### 2. Create dummy data
+- Displays all the attribute values of a single instance
+- Includes a link to go back to the index view
 
-Populate the `db/seeds.rb` file with at least 10 instances of each model. This file is used to populate the database with data using `create` statements and is executed by running `bin/rails db:seed`.
+> 💡 Example: In `app/views/users/show.html.erb`, display the full name and email of the user.
+
+---
+
+You can use plain HTML and embedded Ruby (`.html.erb`). You are not expected to use CSS or any frontend framework at this point.
+
+### 2. Add a navigation bar
+
+Using Bootstrap add a navigation bar at the top of the page. This should be displayed in all pages of the app, for this you should use rails partials (https://guides.rubyonrails.org/layouts_and_rendering.html#using-partials)
