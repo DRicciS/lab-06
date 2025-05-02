@@ -1,10 +1,29 @@
+<%# app/views/messages/show.html.erb %>
+<p style="color: green"><%= notice %></p>
+
 <h1>Message Details</h1>
 
-<p><strong>ID:</strong> <%= @message.id %></p>
-<p><strong>Chat ID:</strong> <%= @message.chat_id %></p>
-<p><strong>User ID (Author):</strong> <%= @message.user_id %></p>
-<p><strong>Body:</strong> <%= @message.body %></p>
-<p><strong>Created At:</strong> <%= @message.created_at %></p>
-<p><strong>Updated At:</strong> <%= @message.updated_at %></p>
+<p>
+  <strong>Author:</strong>
+  <%= link_to @message.user.full_name, user_path(@message.user) %>
+</p>
 
-<%= link_to '← Back to Messages', messages_path, class: "btn btn-secondary mt-3" %>
+<p>
+  <strong>Chat:</strong>
+  <%= link_to @message.chat.chat_participants, chat_path(@message.chat) %>
+</p>
+
+<p>
+  <strong>Body:</strong><br>
+  <%= @message.body %>
+</p>
+
+<p>
+  <strong>Sent:</strong>
+  <%= time_ago_in_words(@message.created_at) %> ago
+</p>
+
+<div>
+  <%= link_to "Edit this message", '#' %> | <%# Add edit_message_path(@message) later if needed %>
+  <%= link_to "Back to messages", messages_path %>
+</div>

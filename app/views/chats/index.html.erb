@@ -1,25 +1,21 @@
-<h1>All Chats</h1>
+<%# app/views/chats/index.html.erb %>
+<h1>Chats</h1>
 
-<table class="table table-striped">
+<%# Link to create a new chat %>
+<p><%= link_to "Start New Chat", new_chat_path %></p>
+
+<table>
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Sender ID</th>
-      <th>Receiver ID</th>
-      <th>Created At</th>
-      <th>Updated At</th>
-      <th>Show</th>
+      <th>Participants</th>
+      <th colspan="1"></th>
     </tr>
   </thead>
   <tbody>
     <% @chats.each do |chat| %>
       <tr>
-        <td><%= chat.id %></td>
-        <td><%= chat.sender_id %></td>
-        <td><%= chat.receiver_id %></td>
-        <td><%= chat.created_at %></td>
-        <td><%= chat.updated_at %></td>
-        <td><%= link_to 'View', chat_path(chat), class: "btn btn-sm btn-primary" %></td>
+        <td><%= link_to chat.chat_participants, chat_path(chat) %></td>
+        <td><%= link_to 'Show', chat_path(chat) %></td>
       </tr>
     <% end %>
   </tbody>

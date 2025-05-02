@@ -1,9 +1,36 @@
+<%# app/views/users/show.html.erb %>
+<p style="color: green"><%= notice %></p> <%# Display flash notices %>
+
 <h1>User Details</h1>
 
-<p><strong>ID:</strong> <%= @user.id %></p>
-<p><strong>Full Name:</strong> <%= @user.first_name %> <%= @user.last_name %></p>
-<p><strong>Email:</strong> <%= @user.email %></p>
-<p><strong>Created At:</strong> <%= @user.created_at %></p>
-<p><strong>Updated At:</strong> <%= @user.updated_at %></p>
+<p>
+  <strong>First name:</strong>
+  <%= @user.first_name %>
+</p>
 
-<%= link_to '← Back to Users', users_path, class: "btn btn-secondary mt-3" %>
+<p>
+  <strong>Last name:</strong>
+  <%= @user.last_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<h2>Messages Sent:</h2>
+<ul>
+  <% @user.messages.each do |message| %>
+    <li><%= link_to truncate(message.body, length: 30), message_path(message) %> (in <%= link_to "Chat ##{message.chat_id}", chat_path(message.chat) %>)</li>
+  <% end %>
+  <% if @user.messages.empty? %>
+    <li>No messages sent.</li>
+  <% end %>
+</ul>
+
+
+<div>
+  <%= link_to "Edit this user", '#' %> | <%# Add edit_user_path(@user) later if needed %>
+  <%= link_to "Back to users", users_path %>
+  <%# Add delete link later if needed %>
+</div>
