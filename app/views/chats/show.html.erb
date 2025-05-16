@@ -13,23 +13,20 @@
   <%= link_to @chat.receiver.full_name, user_path(@chat.receiver) %>
 </p>
 
-<h2>Messages in this Chat:</h2>
-<ul>
-  <% @chat.messages.order(:created_at).each do |message| %>
-    <li>
-      <strong><%= message.user.first_name %>:</strong> <%= message.body %> <small>(<%= time_ago_in_words(message.created_at) %> ago)</small>
-    </li>
-  <% end %>
-  <% if @chat.messages.empty? %>
-    <li>No messages yet.</li>
-  <% end %>
-</ul>
-
-<%# Simple form to add a message directly from the chat page (Optional enhancement) %>
-<%# Requires modification in MessagesController#create to handle redirect back here %>
-<%#= render 'messages/form_simple', message: Message.new(chat: @chat) %>
+<h2>Messages in this Chat (<%= @chat.messages.count %>):</h2>
+<% if @chat.messages.any? %>
+  <ul>
+    <% @chat.messages.order(:created_at).each do |message| %>
+      <li>
+        <strong><%= link_to message.user.first_name, user_path(message.user) %>:</strong> <%= message.body %> <small>(<%= time_ago_in_words(message.created_at) %> ago)</small>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No messages yet in this chat.</p>
+<% end %>
 
 <div>
-  <%= link_to "Edit this chat", '#' %> | <%# Add edit_chat_path(@chat) later if needed %>
+  <%= link_to "Edit this chat", edit_chat_path(@chat) %> |
   <%= link_to "Back to chats", chats_path %>
 </div>

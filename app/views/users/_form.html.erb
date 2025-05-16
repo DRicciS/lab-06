@@ -1,13 +1,11 @@
-<%# app/views/users/new.html.erb %>
-<h1>Add New User</h1>
-
-<%= form_with(model: @user) do |form| %>
+<%# app/views/users/_form.html.erb %>
+<%= form_with(model: user) do |form| %> <%# Changed @user to user (local variable) %>
   <%# Display validation errors %>
-  <% if @user.errors.any? %>
+  <% if user.errors.any? %>
     <div style="color: red;">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
-        <% @user.errors.full_messages.each do |message| %>
+        <% user.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -33,13 +31,3 @@
     <%= form.submit %>
   </div>
 <% end %>
-
-<br>
-<%= link_to "Back to users", users_path %>
-
-<h1>Add New User</h1>
-
-<%= render 'form', user: @user %>
-
-<br>
-<%= link_to "Back to users", users_path %>

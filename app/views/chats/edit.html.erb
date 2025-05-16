@@ -1,0 +1,8 @@
+<%# app/views/chats/edit.html.erb %>
+<h1>Editing Chat: <%= @chat.chat_participants %></h1>
+
+<%= render 'form', chat: @chat %>
+
+<br>
+<%= link_to 'Show', @chat %> |
+<%= link_to "Back to chats", chats_path %>

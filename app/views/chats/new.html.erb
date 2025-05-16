@@ -1,6 +1,11 @@
 <%# app/views/chats/new.html.erb %>
 <h1>Start New Chat</h1>
 
+<%= render 'form', chat: @chat %>
+
+<br>
+<%= link_to "Back to chats", chats_path %>
+
 <%= form_with(model: @chat) do |form| %>
   <% if @chat.errors.any? %>
     <div style="color: red;">

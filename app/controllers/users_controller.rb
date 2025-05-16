@@ -1,14 +1,17 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [ :show, :edit, :update ]
   def index
-    @users = User.all
+    @users = User.includes(:messages).all
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def new
     @user = User.new
+  end
+
+  def edit
   end
 
   def create
@@ -17,14 +20,25 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to @user, notice: "User was successfully created."
     else
-
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to @user, notice: "User was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email) 
+    params.require(:user).permit(:first_name, :last_name, :email)
   end
 end

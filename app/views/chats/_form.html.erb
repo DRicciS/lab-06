@@ -1,0 +1,28 @@
+<%# app/views/chats/_form.html.erb %>
+<%= form_with(model: chat) do |form| %> <%# Changed @chat to chat %>
+  <% if chat.errors.any? %>
+    <div style="color: red;">
+      <h2><%= pluralize(chat.errors.count, "error") %> prohibited this chat from being saved:</h2>
+      <ul>
+        <% chat.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :sender_id %> (Select Sender)<br>
+    <%# Ensure @users is available in both new and edit contexts %>
+    <%= form.select :sender_id, options_from_collection_for_select(@users, :id, :full_name, chat.sender_id), { prompt: 'Select Sender' } %>
+  </div>
+
+  <div>
+    <%= form.label :receiver_id %> (Select Receiver)<br>
+    <%= form.select :receiver_id, options_from_collection_for_select(@users, :id, :full_name, chat.receiver_id), { prompt: 'Select Receiver' } %>
+  </div>
+
+  <div>
+    <%= form.submit "Create Chat" %> <%# Consider changing button text dynamically if needed %>
+  </div>
+<% end %>

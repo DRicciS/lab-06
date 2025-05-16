@@ -1,15 +1,19 @@
 class ChatsController < ApplicationController
+  before_action :set_chat, only: [:show, :edit, :update] # Added :edit, :update
+  before_action :load_users, only: [:new, :create, :edit, :update] # For dropdowns
+
   def index
     @chats = Chat.all
   end
 
   def show
-    @chat = Chat.find(params[:id])
   end
 
   def new
     @chat = Chat.new
-    @users = User.all 
+  end
+
+  def edit
   end
 
   def create
@@ -18,11 +22,27 @@ class ChatsController < ApplicationController
     if @chat.save
       redirect_to @chat, notice: "Chat was successfully created."
     else
-      @users = User.all 
       render :new, status: :unprocessable_entity
     end
   end
-  private
+
+  def update
+    if @chat.update(chat_params)
+  redirect_to @chat, notice: "Chat was successfully updated."
+    else
+  render :edit, status: :unprocessable_entity
+  end
+end
+private
+
+  def set_chat # New method
+    @chat = Chat.find(params[:id])
+  end
+
+  def load_users # New method
+    @users = User.all
+  end
+
   def chat_params
     params.require(:chat).permit(:sender_id, :receiver_id)
   end

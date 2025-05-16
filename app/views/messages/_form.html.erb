@@ -1,0 +1,32 @@
+<%# app/views/messages/_form.html.erb %>
+<%= form_with(model: message) do |form| %> <%# Changed @message to message %>
+  <% if message.errors.any? %>
+    <div style="color: red;">
+      <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
+      <ul>
+        <% message.errors.full_messages.each do |msg| %> <%# Renamed inner variable to avoid conflict %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id %> (Select Author)<br>
+    <%= form.select :user_id, options_from_collection_for_select(@users, :id, :full_name, message.user_id), { prompt: 'Select Author' } %>
+  </div>
+
+  <div>
+    <%= form.label :chat_id %> (Select Chat)<br>
+    <%= form.select :chat_id, options_from_collection_for_select(@chats, :id, :chat_participants, message.chat_id), { prompt: 'Select Chat' } %>
+  </div>
+
+  <div>
+    <%= form.label :body %> (Message Content)<br>
+    <%= form.text_area :body, rows: 4 %>
+  </div>
+
+  <div>
+    <%= form.submit "Send Message" %> <%# Consider changing button text dynamically %>
+  </div>
+<% end %>

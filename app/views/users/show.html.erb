@@ -1,5 +1,5 @@
 <%# app/views/users/show.html.erb %>
-<p style="color: green"><%= notice %></p> <%# Display flash notices %>
+<p style="color: green"><%= notice %></p>
 
 <h1>User Details</h1>
 
@@ -18,19 +18,31 @@
   <%= @user.email %>
 </p>
 
-<h2>Messages Sent:</h2>
-<ul>
-  <% @user.messages.each do |message| %>
-    <li><%= link_to truncate(message.body, length: 30), message_path(message) %> (in <%= link_to "Chat ##{message.chat_id}", chat_path(message.chat) %>)</li>
-  <% end %>
-  <% if @user.messages.empty? %>
-    <li>No messages sent.</li>
-  <% end %>
-</ul>
+<% all_chats = (@user.sent_chats + @user.received_chats).uniq.sort_by(&:created_at).reverse %>
+<h2>Chats (<%= all_chats.count %>):</h2>
+<% if all_chats.any? %>
+  <ul>
+    <% all_chats.each do |chat| %>
+      <li><%= link_to chat.chat_participants, chat_path(chat) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>This user is not participating in any chats yet.</p>
+<% end %>
 
+<h2>Messages Sent (<%= @user.messages.count %>):</h2>
+<% if @user.messages.any? %>
+  <ul>
+    <% @user.messages.order(created_at: :desc).each do |message| %>
+      <li><%= link_to truncate(message.body, length: 30), message_path(message) %> (in <%= link_to "Chat ##{message.chat_id}", chat_path(message.chat) %>)</li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No messages sent by this user.</p>
+<% end %>
 
 <div>
-  <%= link_to "Edit this user", '#' %> | <%# Add edit_user_path(@user) later if needed %>
+  
+  <%= link_to "Edit this user", edit_user_path(@user) %> |
   <%= link_to "Back to users", users_path %>
-  <%# Add delete link later if needed %>
 </div>

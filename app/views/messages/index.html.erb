@@ -1,7 +1,6 @@
 <%# app/views/messages/index.html.erb %>
 <h1>All Messages</h1>
 
-<%# Link to create a new message %>
 <p><%= link_to "Send New Message", new_message_path %></p>
 
 <table>
@@ -10,7 +9,7 @@
       <th>Author</th>
       <th>Chat</th>
       <th>Body</th>
-      <th colspan="1"></th>
+      <th colspan="2">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -18,8 +17,9 @@
       <tr>
         <td><%= message.user.full_name %></td>
         <td><%= link_to message.chat.chat_participants, chat_path(message.chat) %></td>
-        <td><%= truncate(message.body, length: 50) %></td> <%# Truncate long messages %>
+        <td><%= truncate(message.body, length: 50) %></td>
         <td><%= link_to 'Show', message_path(message) %></td>
+        <td><%= link_to 'Edit', edit_message_path(message) %></td>
       </tr>
     <% end %>
   </tbody>
