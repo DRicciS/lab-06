@@ -1,7 +1,9 @@
 <%# app/views/messages/index.html.erb %>
 <h1>All Messages</h1>
 
-<p><%= link_to "Send New Message", new_message_path %></p>
+<% if can? :create, Message %>
+  <p><%= link_to "Send New Message", new_message_path %></p>
+<% end %>
 
 <table>
   <thead>
@@ -9,17 +11,36 @@
       <th>Author</th>
       <th>Chat</th>
       <th>Body</th>
-      <th colspan="2">Actions</th>
+      <th colspan="3">Actions</th> <%# Adjust colspan if adding destroy %>
     </tr>
   </thead>
   <tbody>
     <% @messages.each do |message| %>
       <tr>
         <td><%= message.user.full_name %></td>
-        <td><%= link_to message.chat.chat_participants, chat_path(message.chat) %></td>
+        <td>
+          <% if can? :show, message.chat %>
+            <%= link_to message.chat.chat_participants, chat_path(message.chat) %>
+          <% else %>
+            <%= message.chat.chat_participants %>
+          <% end %>
+        </td>
         <td><%= truncate(message.body, length: 50) %></td>
-        <td><%= link_to 'Show', message_path(message) %></td>
-        <td><%= link_to 'Edit', edit_message_path(message) %></td>
+        <td>
+          <% if can? :show, message %>
+            <%= link_to 'Show', message_path(message) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :edit, message %>
+            <%= link_to 'Edit', edit_message_path(message) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :destroy, message %>
+            <%= button_to 'Delete', message, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

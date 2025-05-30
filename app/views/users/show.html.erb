@@ -46,3 +46,14 @@
   <%= link_to "Edit this user", edit_user_path(@user) %> |
   <%= link_to "Back to users", users_path %>
 </div>
+
+<div>
+  <% if can? :edit, @user %>
+    <%= link_to "Edit this user", edit_user_path(@user) %> |
+  <% end %>
+  <%= link_to "Back to users", users_path %>
+  <%# Add destroy if you implement it and define abilities %>
+  <%# if can? :destroy, @user %>
+  <%#   | <%= button_to 'Delete this user', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%# end %>
+</div>

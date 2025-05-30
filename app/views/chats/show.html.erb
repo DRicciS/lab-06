@@ -30,3 +30,12 @@
   <%= link_to "Edit this chat", edit_chat_path(@chat) %> |
   <%= link_to "Back to chats", chats_path %>
 </div>
+<div>
+  <% if can? :edit, @chat %>
+    <%= link_to "Edit this chat", edit_chat_path(@chat) %> |
+  <% end %>
+  <%= link_to "Back to chats", chats_path %>
+  <% if can? :destroy, @chat %>
+    | <%= button_to 'Delete this chat', @chat, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+</div>

@@ -1,20 +1,43 @@
 <%# app/views/chats/index.html.erb %>
 <h1>Chats</h1>
 
-<p><%= link_to "Start New Chat", new_chat_path %></p>
+<% if can? :create, Chat %>
+  <p><%= link_to "Start New Chat", new_chat_path %></p>
+<% end %>
 
 <table>
   <thead>
     <tr>
       <th>Participants</th>
-      <th colspan="2">Actions</th> 
+      <th colspan="3">Actions</th> <%# Adjust colspan if adding destroy %>
+    </tr>
   </thead>
   <tbody>
     <% @chats.each do |chat| %>
       <tr>
-        <td><%= link_to chat.chat_participants, chat_path(chat) %></td>
-        <td><%= link_to 'Show', chat_path(chat) %></td>
-        <td><%= link_to 'Edit', edit_chat_path(chat) %></td>
+        <td>
+          <% if can? :show, chat %>
+            <%= link_to chat.chat_participants, chat_path(chat) %>
+          <% else %>
+            <%= chat.chat_participants %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :show, chat %>
+            <%= link_to 'Show', chat_path(chat) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :edit, chat %>
+            <%= link_to 'Edit', edit_chat_path(chat) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :destroy, chat %>
+            <%= button_to 'Delete', chat, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>
