@@ -1,5 +1,5 @@
 <%# app/views/chats/index.html.erb %>
-<h1>Chats</h1>
+<h1>My Inbox</h1>
 
 <% if can? :create, Chat %>
   <p><%= link_to "Start New Chat", new_chat_path %></p>
@@ -8,18 +8,20 @@
 <table>
   <thead>
     <tr>
-      <th>Participants</th>
-      <th colspan="3">Actions</th> <%# Adjust colspan if adding destroy %>
+      <th>Conversation With</th>
+      <th colspan="3">Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @chats.each do |chat| %>
       <tr>
         <td>
+          <%# USE THE NEW METHOD HERE %>
+          <% other_user = chat.other_participant(current_user) %>
           <% if can? :show, chat %>
-            <%= link_to chat.chat_participants, chat_path(chat) %>
+            <%= link_to other_user.full_name, chat_path(chat) %>
           <% else %>
-            <%= chat.chat_participants %>
+            <%= other_user.full_name %>
           <% end %>
         </td>
         <td>

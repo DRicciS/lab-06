@@ -6,9 +6,9 @@ class ChatsController < ApplicationController
   # before_action :set_chat, only: [:show, :edit, :update] # Likely redundant
   before_action :load_users, only: [ :new, :create, :edit, :update ] # Keep for your forms
 
-  def index
-    # @chats is populated by load_and_authorize_resource
-  end
+    def index
+    @chats = Chat.for_user(current_user).order(created_at: :desc)
+    end
 
   def show
     # @chat is loaded and authorized
